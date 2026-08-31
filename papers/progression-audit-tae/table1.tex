@@ -1,0 +1,29 @@
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{6pt}
+  \renewcommand{\arraystretch}{1.2}
+  \caption{\textbf{The published GRAPE progression record against the audit.} Reported AUC is PLR2/PLR3/MD. The
+  \emph{Fails} column names the checks the reported number does not clear: a device floor (a model given only the
+  acquisition camera), a fair patient-grouped split, and circularity (the input disjoint from the window that defines the
+  label). Circularity does not apply to a single baseline image (Huang, Fouda) or two early images (DiffSight, below the
+  three-visit slope threshold), which have no serial window to leak. Every reported number fails at least one check, and
+  every reported AUC and split is verified from the five source papers (for TSDF, from its released code). $\dagger$:
+  weights and key components are unreleased (DiffSight's vessel and optic-disc/cup difference maps, GPPM's evidential
+  fusion), so these two are reproduced as a matched model class. Their verdict is that the eye-level protocol inflates
+  that class, not a re-run of the exact network.}
+  \label{tab:priorclaims}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Model & Reported AUC & Fails \\
+    \midrule
+    Huang et al.\ \citep{huang2023grape}       & 0.71/0.80/0.73    & device, split \\
+    TSDF \citep{song2025tsdf}                   & 0.87/0.96/0.92    & device, split, circularity \\
+    DiffSight-Former$^\dagger$ \citep{huang2026diffsight} & 0.79/0.88/0.80 & device, split \\
+    GPPM$^\dagger$ \citep{zheng2025gppm}         & 0.85/0.82/0.69    & device, split, circularity \\
+    Fouda \& Mohammed \citep{fouda2025}         & 0.86\,(PLR3)      & device, split \\
+    \midrule
+    \textit{Camera-only floor (ours)}           & 0.561/0.600/0.580 & \textit{reference} \\
+    \bottomrule
+  \end{tabular}
+\end{table}

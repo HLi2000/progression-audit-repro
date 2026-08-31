@@ -1,0 +1,42 @@
+\documentclass{article}
+
+% NeurIPS 2026 format, double-blind workshop mode (anonymous + line numbers + workshop footer).
+% For the camera-ready, swap [dblblindworkshop] -> [final] and de-anonymize the author block.
+\usepackage[dblblindworkshop, nonatbib]{neurips_2026}
+\usepackage[numbers]{natbib}
+\workshoptitle{TAE (Trust-AI-Eval): Can We Trust AI Evaluation?}
+
+\input{extra_pkgs}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{siunitx}
+\sisetup{detect-weight=true, detect-family=true}
+
+\newcommand{\ci}[2]{{\footnotesize[#1,\,#2]}}   % 95\% CI helper
+
+\title{The Camera, the Split, and the Label:\\
+A Three-Check Audit of Glaucoma-Progression Prediction}
+
+\author{%
+  Anonymous Author(s)\\
+  Affiliation\\
+  \texttt{anonymous@example.com}%
+}
+
+\begin{document}
+
+\maketitle
+
+\input{sections}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\newpage
+\appendix
+\input{appendix}
+
+\newpage
+\input{checklist}
+
+\end{document}

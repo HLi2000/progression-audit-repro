@@ -1,0 +1,44 @@
+[project]
+name = "progression-audit-repro"
+version = "0.1.0"
+description = "Reproducibility for the TAE glaucoma-progression audit paper (The Camera, the Split, and the Label)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Ufonia Science Team" }]
+dependencies = [
+    "pandas>=2.2",
+    "numpy>=1.26",
+    "openpyxl>=3.1",
+    "pillow>=10.3",
+    "requests>=2.32",
+    "pyyaml>=6.0",
+    "pyarrow>=16.0",
+    "tqdm>=4.66",
+    "python-dotenv>=1.0",
+    "matplotlib>=3.8",
+    "scikit-learn>=1.4",
+    "scikit-survival>=0.28.0",
+    "pyreadr>=0.5.6",
+    "google-genai>=2.16.0",
+    "openai>=3.1.0",
+    "pymupdf>=1.28.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.2", "ruff>=0.6", "ipykernel>=6.29"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/glaucoma_triage"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

@@ -1,0 +1,260 @@
+% ======================================================================================
+%  references.bib — Progression-Audit / TAE.  Verification provenance in REFERENCES_VERIFICATION.md.
+%  CROSSREF/PUBMED-VERIFIED this session (title/authors/venue/DOI from a primary source):
+%    huang2023grape, saeedi2019 (author list corrected), zheng2025gppm, song2025tsdf (Springer LMID chapter),
+%    huang2026diffsight, zhou2023retfound, fouda2025 (title/authors/venue/DOI corrected),
+%    ohts2007validated (the 2007 OHTS/EGPS model reporting c-stat 0.74), tham2014global.
+%  CANONICAL (widely-known, standard metadata):
+%    zech2018, degrave2021, geirhos2020, gichoya2022, poplin2018, kapoor2023leakage,
+%    raji2021benchmark, koh2021wilds, diciccio1996bootstrap.
+% ======================================================================================
+
+% ---- the GRAPE dataset + the published GRAPE-CFP progression models (audited here) ----
+@article{huang2023grape,
+  title={{GRAPE}: A Multi-modal Dataset of Longitudinal Follow-up Visual Field and Fundus Images for
+         Glaucoma Management},
+  author={Huang, Xiaoling and Kong, Xiangyin and Shen, Ziyan and Ouyang, Jing and Li, Yunxiang and
+          Jin, Kai and Ye, Juan},
+  journal={Scientific Data}, volume={10}, number={1}, pages={520}, year={2023},
+  doi={10.1038/s41597-023-02424-4}}
+
+@inproceedings{song2025tsdf,
+  title={Two-Stage Decoupling Framework for Variable-Length Glaucoma Prognosis},
+  author={Song, Yiran and Zhang, Yikai and Orengo-Nania, Silvia and Wang, Nian and Ma, Fenglong and
+          Zhang, Rui and Peng, Yifan and Lin, Mingquan},
+  booktitle={Learning with Longitudinal Medical Images and Data ({LMID}), {MICCAI} 2025 Workshop},
+  series={Lecture Notes in Computer Science}, publisher={Springer}, pages={91--101}, year={2025},
+  doi={10.1007/978-3-032-16128-4_9}, note={Preprint arXiv:2509.12453}}
+
+@article{huang2026diffsight,
+  title={{DiffSight-Former}: Modeling Structural Differences and Temporal Dynamics for Glaucoma
+         Progression Prediction},
+  author={Huang, Yi and Bi, Lei and Kim, Jinman},
+  journal={arXiv preprint arXiv:2606.09140}, year={2026}, eprint={2606.09140}, archivePrefix={arXiv}}
+
+@article{zheng2025gppm,
+  title={Glaucoma Progression Prediction Using Multi-modal Data and Trusted Multi-view Learning},
+  author={Zheng, Xiujuan and Wang, Wo and Lv, Zhiqing and Li, Ni},
+  journal={Expert Systems with Applications}, volume={288}, pages={128225}, year={2025},
+  doi={10.1016/j.eswa.2025.128225}}
+
+@inproceedings{fouda2025,
+  title={Predicting Glaucoma Visual Field Progression from Fundus Images with a Weighted Ensemble Method},
+  author={Fouda, Mohammed I. and Mohammed, Ammar},
+  booktitle={2025 International Conference on Intelligent Methods, Systems, and Applications ({IMSA})},
+  publisher={IEEE}, year={2025}, doi={10.1109/IMSA65733.2025.11166927}}
+
+% ---- reference standards for progression + clinical background -----------------------
+@article{saeedi2019,
+  title={Agreement and Predictors of Discordance of 6 Visual Field Progression Algorithms},
+  author={Saeedi, Osamah J. and Elze, Tobias and D'Acunto, Loris and Swamy, Ramya and Hegde, Vikram and
+          Gupta, Surabhi and Venjara, Amin and Tsai, Joby and Myers, Jonathan S. and Wellik, Sarah R. and
+          De Moraes, Carlos G. and Pasquale, Louis R. and Shen, Lucy Q. and Boland, Michael V.},
+  journal={Ophthalmology}, volume={126}, number={6}, pages={822--828}, year={2019},
+  doi={10.1016/j.ophtha.2019.01.029}}
+
+@article{ohts2007validated,
+  title={Validated Prediction Model for the Development of Primary Open-Angle Glaucoma in Individuals with
+         Ocular Hypertension},
+  author={Gordon, Mae O. and Torri, Valter and Miglior, Stefano and Beiser, Julia A. and Floriani, Irene and
+          Miller, J. Philip and Gao, Feng and Adamsons, Ingrid and Poli, Daniela and D'Agostino, Ralph B. and others},
+  journal={Ophthalmology}, volume={114}, number={1}, pages={10--19}, year={2007},
+  doi={10.1016/j.ophtha.2006.08.031}}
+
+@article{mohammadzadeh2026,
+  title={An Artificial Intelligence-Based Prognostic Model for Prediction of Functional Glaucoma Progression from
+         Clinical and Structural Data},
+  author={Mohammadzadeh, Vahid and Wu, Sean and Besharati, Sajad and Rafiee, Mahshad and Banaei, Yasamin and
+          Martinyan, Arthur and Zou, Jane and Kung, Evelyn and Edalati, Kiumars and Morales, Esteban and
+          Scalzo, Fabien and Caprioli, Joseph and Nouri-Mahdavi, Kouros},
+  journal={American Journal of Ophthalmology}, volume={284}, pages={43--55}, year={2026},
+  doi={10.1016/j.ajo.2025.12.026}}
+
+@article{tham2014global,
+  title={Global Prevalence of Glaucoma and Projections of Glaucoma Burden through 2040:
+         A Systematic Review and Meta-Analysis},
+  author={Tham, Yih-Chung and Li, Xiang and Wong, Tien Y. and Quigley, Harry A. and Aung, Tin and Cheng, Ching-Yu},
+  journal={Ophthalmology}, volume={121}, number={11}, pages={2081--2090}, year={2014},
+  doi={10.1016/j.ophtha.2014.05.013}}
+
+% ---- shortcut learning / models decode the acquisition device ------------------------
+@article{geirhos2020,
+  title={Shortcut Learning in Deep Neural Networks},
+  author={Geirhos, Robert and Jacobsen, J{\"o}rn-Henrik and Michaelis, Claudio and Zemel, Richard and
+          Brendel, Wieland and Bethge, Matthias and Wichmann, Felix A.},
+  journal={Nature Machine Intelligence}, volume={2}, number={11}, pages={665--673}, year={2020},
+  doi={10.1038/s42256-020-00257-z}}
+
+@article{zech2018,
+  title={Variable Generalization Performance of a Deep Learning Model to Detect Pneumonia in Chest
+         Radiographs: A Cross-Sectional Study},
+  author={Zech, John R. and Badgeley, Marcus A. and Liu, Manway and Costa, Anthony B. and Titano, Joseph J. and
+          Oermann, Eric Karl},
+  journal={PLoS Medicine}, volume={15}, number={11}, pages={e1002683}, year={2018},
+  doi={10.1371/journal.pmed.1002683}}
+
+@article{degrave2021,
+  title={{AI} for Radiographic {COVID-19} Detection Selects Shortcuts over Signal},
+  author={DeGrave, Alex J. and Janizek, Joseph D. and Lee, Su-In},
+  journal={Nature Machine Intelligence}, volume={3}, number={7}, pages={610--619}, year={2021},
+  doi={10.1038/s42256-021-00338-7}}
+
+@article{gichoya2022,
+  title={{AI} Recognition of Patient Race in Medical Imaging: A Modelling Study},
+  author={Gichoya, Judy Wawira and Banerjee, Imon and Bhimireddy, Ananth Reddy and Burns, John L. and
+          Celi, Leo Anthony and Chen, Li-Ching and Correa, Ramon and Dullerud, Natalie and Ghassemi, Marzyeh and
+          Huang, Shih-Cheng and others},
+  journal={The Lancet Digital Health}, volume={4}, number={6}, pages={e406--e414}, year={2022},
+  doi={10.1016/S2589-7500(22)00063-2}}
+
+@article{poplin2018,
+  title={Prediction of Cardiovascular Risk Factors from Retinal Fundus Photographs via Deep Learning},
+  author={Poplin, Ryan and Varadarajan, Avinash V. and Blumer, Katy and Liu, Yun and McConnell, Michael V. and
+          Corrado, Greg S. and Peng, Lily and Webster, Dale R.},
+  journal={Nature Biomedical Engineering}, volume={2}, number={3}, pages={158--164}, year={2018},
+  doi={10.1038/s41551-018-0195-0}}
+
+% ---- data leakage, benchmark auditing, measurement validity (the TAE lens) -----------
+@article{kapoor2023leakage,
+  title={Leakage and the Reproducibility Crisis in Machine-Learning-Based Science},
+  author={Kapoor, Sayash and Narayanan, Arvind},
+  journal={Patterns}, volume={4}, number={9}, pages={100804}, year={2023},
+  doi={10.1016/j.patter.2023.100804}}
+
+@inproceedings{raji2021benchmark,
+  title={{AI} and the Everything in the Whole Wide World Benchmark},
+  author={Raji, Inioluwa Deborah and Bender, Emily M. and Paullada, Amandalynne and Denton, Emily and Hanna, Alex},
+  booktitle={Advances in Neural Information Processing Systems (NeurIPS) Datasets and Benchmarks Track}, year={2021}}
+
+@inproceedings{koh2021wilds,
+  title={{WILDS}: A Benchmark of in-the-Wild Distribution Shifts},
+  author={Koh, Pang Wei and Sagawa, Shiori and Marklund, Henrik and Xie, Sang Michael and Zhang, Marvin and
+          Balsubramani, Akshay and Hu, Weihua and Yasunaga, Michihiro and Phillips, Richard Lanas and others},
+  booktitle={Proceedings of the 38th International Conference on Machine Learning (ICML)}, volume={139},
+  pages={5637--5664}, year={2021}}
+
+% ---- foundation model + external cohort used in the audit ----------------------------
+@article{zhou2023retfound,
+  title={A Foundation Model for Generalizable Disease Detection from Retinal Images},
+  author={Zhou, Yukun and Chia, Mark A. and Wagner, Siegfried K. and Ayhan, Murat S. and Williamson, Dominic J. and
+          Struyven, Robbert R. and Liu, Timing and Xu, Moucheng and Lozano, Mateo G. and Woodward-Court, Peter and others},
+  journal={Nature}, volume={622}, number={7981}, pages={156--163}, year={2023}, doi={10.1038/s41586-023-06555-x}}
+
+% ---- method: cluster bootstrap CIs ---------------------------------------------------
+@article{diciccio1996bootstrap,
+  title={Bootstrap Confidence Intervals},
+  author={DiCiccio, Thomas J. and Efron, Bradley},
+  journal={Statistical Science}, volume={11}, number={3}, pages={189--228}, year={1996},
+  doi={10.1214/ss/1032280214}}
+
+% ---- method: covariate-adjusted AUC (device isolation) + internal-external cross-validation ----
+@article{janes2009aroc,
+  title={Adjusting for Covariate Effects on Classification Accuracy Using the Covariate-Adjusted Receiver Operating
+         Characteristic Curve},
+  author={Janes, Holly and Pepe, Margaret S.},
+  journal={Biometrika}, volume={96}, number={2}, pages={371--382}, year={2009},
+  doi={10.1093/biomet/asp002}}
+
+@article{debray2013iecv,
+  title={A Framework for Developing, Implementing, and Evaluating Clinical Prediction Models in an Individual
+         Participant Data Meta-Analysis},
+  author={Debray, Thomas P. A. and Moons, Karel G. M. and Ahmed, Ikhlaaq and Koffijberg, Hendrik and Riley, Richard D.},
+  journal={Statistics in Medicine}, volume={32}, number={18}, pages={3158--3180}, year={2013},
+  doi={10.1002/sim.5732}}
+
+@article{ahmed2014iecv,
+  title={Developing and Validating Risk Prediction Models in an Individual Participant Data Meta-Analysis},
+  author={Ahmed, Ikhlaaq and Debray, Thomas P. A. and Moons, Karel G. M. and Riley, Richard D.},
+  journal={BMC Medical Research Methodology}, volume={14}, number={1}, pages={3}, year={2014},
+  doi={10.1186/1471-2288-14-3}}
+
+% ---- method: sample size / power for clinical prediction models ----------------------
+@article{riley2020samplesize,
+  title={Calculating the sample size required for developing a clinical prediction model},
+  author={Riley, Richard D and Ensor, Joie and Snell, Kym I E and Harrell, Frank E and Martin, Glen P and Reitsma, Johannes B and Moons, Karel G M and Collins, Gary and van Smeden, Maarten},
+  journal={BMJ}, pages={m441}, year={2020},
+  doi={10.1136/bmj.m441}}
+
+@article{vansmeden2019samplesize,
+  title={Sample size for binary logistic prediction models: Beyond events per variable criteria},
+  author={van Smeden, Maarten and Moons, Karel G M and de Groot, Joris A H and Collins, Gary S and Altman, Douglas G and Eijkemans, Marinus J C and Reitsma, Johannes B},
+  journal={Statistical Methods in Medical Research}, volume={28}, number={8}, pages={2455--2474}, year={2019},
+  doi={10.1177/0962280218784726}}
+
+% ---- benchmarking / progress-scepticism (cross-field) --------------------------------
+@inproceedings{dacrema2019progress, series={RecSys '19}, title={Are we really making much progress? A worrying analysis of recent neural recommendation approaches}, url={http://dx.doi.org/10.1145/3298689.3347058}, DOI={10.1145/3298689.3347058}, booktitle={Proceedings of the 13th ACM Conference on Recommender Systems}, publisher={ACM}, author={Ferrari Dacrema, Maurizio and Cremonesi, Paolo and Jannach, Dietmar}, year={2019}, month=Sept, pages={101--109}, collection={RecSys '19} }
+
+@article{blalock2020pruning,
+  title={What is the State of Neural Network Pruning?},
+  author={Blalock, Davis and Gonzalez Ortiz, Jose Javier and Frankle, Jonathan and Guttag, John},
+  journal={arXiv preprint arXiv:2003.03033}, year={2020}, eprint={2003.03033}, archivePrefix={arXiv}}
+
+@inproceedings{musgrave2020metric,
+  title={A Metric Learning Reality Check},
+  author={Musgrave, Kevin and Belongie, Serge and Lim, Ser-Nam},
+  booktitle={Computer Vision -- {ECCV} 2020}, series={Lecture Notes in Computer Science},
+  pages={681--699}, year={2020}, publisher={Springer}, doi={10.1007/978-3-030-58595-2\_41}}
+
+@article{cawley2010overfitting,
+  title={On Over-fitting in Model Selection and Subsequent Selection Bias in Performance Evaluation},
+  author={Cawley, Gavin C. and Talbot, Nicola L. C.},
+  journal={Journal of Machine Learning Research}, volume={11}, number={70}, pages={2079--2107}, year={2010}}
+
+@article{roberts2021pitfalls,
+  title={Common Pitfalls and Recommendations for Using Machine Learning to Detect and Prognosticate for {COVID-19}
+         Using Chest Radiographs and {CT} Scans},
+  author={Roberts, Michael and Driggs, Derek and Thorpe, Matthew and Gilbey, Julian and Yeung, Michael and
+          Ursprung, Stephan and Aviles-Rivero, Angelica I. and Etmann, Christian and McCague, Cormac and others},
+  journal={Nature Machine Intelligence}, volume={3}, number={3}, pages={199--217}, year={2021},
+  doi={10.1038/s42256-021-00307-0}}
+
+@inproceedings{yang2019hype, series={SIGIR '19}, title={Critically Examining the ``Neural Hype'': Weak Baselines and the Additivity of Effectiveness Gains from Neural Ranking Models}, url={http://dx.doi.org/10.1145/3331184.3331340}, DOI={10.1145/3331184.3331340}, booktitle={Proceedings of the 42nd International ACM SIGIR Conference on Research and Development in Information Retrieval}, publisher={ACM}, author={Yang, Wei and Lu, Kuang and Yang, Peilin and Lin, Jimmy}, year={2019}, month=July, pages={1129--1132}, collection={SIGIR '19} }
+
+@article{dehghani2021lottery,
+  title={The Benchmark Lottery},
+  author={Dehghani, Mostafa and Tay, Yi and Gritsenko, Alexey A. and Zhao, Zhe and Houlsby, Neil and Diaz, Fernando and Metzler, Donald and Vinyals, Oriol},
+  journal={arXiv preprint arXiv:2107.07002}, year={2021}, eprint={2107.07002}, archivePrefix={arXiv}}
+
+@inproceedings{liao2021learning,
+  title={Are We Learning Yet? A Meta Review of Evaluation Failures Across Machine Learning},
+  author={Liao, Thomas and Taori, Rohan and Raji, Inioluwa Deborah and Schmidt, Ludwig},
+  booktitle={Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks (NeurIPS Datasets and Benchmarks)}, year={2021},
+  url={https://openreview.net/forum?id=mPducS1MsEK}}
+
+@misc{recht2019imagenet,
+  title={Do ImageNet Classifiers Generalize to ImageNet?},
+  author={Recht, Benjamin and Roelofs, Rebecca and Schmidt, Ludwig and Shankar, Vaishaal},
+  year={2019}, eprint={1902.10811}, archivePrefix={arXiv}, primaryClass={cs.LG}}
+
+% ---- leakage / circularity / confounding (mechanisms) --------------------------------
+@article{kaufman2012leakage, title={Leakage in data mining: Formulation, detection, and avoidance}, volume={6}, ISSN={1556-472X}, url={http://dx.doi.org/10.1145/2382577.2382579}, DOI={10.1145/2382577.2382579}, number={4}, journal={ACM Transactions on Knowledge Discovery from Data}, publisher={Association for Computing Machinery (ACM)}, author={Kaufman, Shachar and Rosset, Saharon and Perlich, Claudia and Stitelman, Ori}, year={2012}, month=Dec, pages={1--21} }
+
+@article{kriegeskorte2009circular, title={Circular analysis in systems neuroscience: the dangers of double dipping}, volume={12}, ISSN={1546-1726}, url={http://dx.doi.org/10.1038/nn.2303}, DOI={10.1038/nn.2303}, number={5}, journal={Nature Neuroscience}, publisher={Springer Science and Business Media LLC}, author={Kriegeskorte, Nikolaus and Simmons, W Kyle and Bellgowan, Patrick S F and Baker, Chris I}, year={2009}, month=Apr, pages={535--540} }
+
+@article{davis2023leakage, title={A framework for understanding label leakage in machine learning for health care}, volume={31}, ISSN={1527-974X}, url={http://dx.doi.org/10.1093/jamia/ocad178}, DOI={10.1093/jamia/ocad178}, number={1}, journal={Journal of the American Medical Informatics Association}, publisher={Oxford University Press (OUP)}, author={Davis, Sharon E and Matheny, Michael E and Balu, Suresh and Sendak, Mark P}, year={2023}, month=Sept, pages={274--280} }
+
+@article{ramadan2025leakage, title={Diagnostic Codes in AI Prediction Models and Label Leakage of Same-Admission Clinical Outcomes}, volume={8}, ISSN={2574-3805}, url={http://dx.doi.org/10.1001/jamanetworkopen.2025.50454}, DOI={10.1001/jamanetworkopen.2025.50454}, number={12}, journal={JAMA Network Open}, publisher={American Medical Association (AMA)}, author={Ramadan, Bashar and Liu, Ming-Chieh and Burkhart, Michael C. and Parker, William F. and Beaulieu-Jones, Brett K.}, year={2025}, month=Dec, pages={e2550454} }
+
+@article{tampu2022leakage, title={Inflation of test accuracy due to data leakage in deep learning-based classification of OCT images}, volume={9}, ISSN={2052-4463}, url={http://dx.doi.org/10.1038/s41597-022-01618-6}, DOI={10.1038/s41597-022-01618-6}, number={1}, journal={Scientific Data}, publisher={Springer Science and Business Media LLC}, author={Tampu, Iulian Emil and Eklund, Anders and Haj-Hosseini, Neda}, year={2022}, month=Sept }
+
+@article{yagis2021leakage, title={Effect of data leakage in brain MRI classification using 2D convolutional neural networks}, volume={11}, ISSN={2045-2322}, url={http://dx.doi.org/10.1038/s41598-021-01681-w}, DOI={10.1038/s41598-021-01681-w}, number={1}, journal={Scientific Reports}, publisher={Springer Science and Business Media LLC}, author={Yagis, Ekin and Atnafu, Selamawet Workalemahu and Garc{\'i}a Seco de Herrera, Alba and Marzi, Chiara and Scheda, Riccardo and Giannelli, Marco and Tessa, Carlo and Citi, Luca and Diciotti, Stefano}, year={2021}, month=Nov }
+
+% ---- device / site / acquisition confounds in imaging AI -----------------------------
+@article{badgeley2019confound, title={Deep learning predicts hip fracture using confounding patient and healthcare variables}, volume={2}, ISSN={2398-6352}, url={http://dx.doi.org/10.1038/s41746-019-0105-1}, DOI={10.1038/s41746-019-0105-1}, number={1}, journal={npj Digital Medicine}, publisher={Springer Science and Business Media LLC}, author={Badgeley, Marcus A. and Zech, John R. and Oakden-Rayner, Luke and Glicksberg, Benjamin S. and Liu, Manway and Gale, William and McConnell, Michael V. and Percha, Bethany and Snyder, Thomas M. and Dudley, Joel T.}, year={2019}, month=Apr }
+
+@misc{glocker2019scanner,
+  title={Machine Learning with Multi-Site Imaging Data: An Empirical Study on the Impact of Scanner Effects},
+  author={Glocker, Ben and Robinson, Robert and Castro, Daniel C. and Dou, Qi and Konukoglu, Ender},
+  year={2019}, eprint={1910.04597}, archivePrefix={arXiv}, primaryClass={cs.CV}}
+
+@article{dehkharghanian2023site, title={Biased data, biased AI: deep networks predict the acquisition site of TCGA images}, volume={18}, ISSN={1746-1596}, url={http://dx.doi.org/10.1186/s13000-023-01355-3}, DOI={10.1186/s13000-023-01355-3}, number={1}, journal={Diagnostic Pathology}, publisher={Springer Science and Business Media LLC}, author={Dehkharghanian, Taher and Bidgoli, Azam Asilian and Riasatian, Abtin and Mazaheri, Pooria and Campbell, Clinton J. V. and Pantanowitz, Liron and Tizhoosh, H. R. and Rahnamayan, Shahryar}, year={2023}, month=May }
+
+% ---- medical-imaging ML pitfalls / hidden stratification -----------------------------
+@inproceedings{oakdenrayner2020stratification, series={ACM CHIL '20}, title={Hidden stratification causes clinically meaningful failures in machine learning for medical imaging}, url={http://dx.doi.org/10.1145/3368555.3384468}, DOI={10.1145/3368555.3384468}, booktitle={Proceedings of the ACM Conference on Health, Inference, and Learning}, publisher={ACM}, author={Oakden-Rayner, Luke and Dunnmon, Jared and Carneiro, Gustavo and Re, Christopher}, year={2020}, month=Apr, pages={151--159}, collection={ACM CHIL '20} }
+
+@article{varoquaux2022pitfalls, title={Machine learning for medical imaging: methodological failures and recommendations for the future}, volume={5}, ISSN={2398-6352}, url={http://dx.doi.org/10.1038/s41746-022-00592-y}, DOI={10.1038/s41746-022-00592-y}, number={1}, journal={npj Digital Medicine}, publisher={Springer Science and Business Media LLC}, author={Varoquaux, Ga{\"e}l and Cheplygina, Veronika}, year={2022}, month=Apr }
+
+% ---- glaucoma progression: review & structure-to-function DL --------------------------
+@article{liang2026review, title={A systematic review of AI for predicting glaucoma progression: challenges and recommendations towards clinical implementation}, volume={9}, ISSN={2398-6352}, url={http://dx.doi.org/10.1038/s41746-025-02321-7}, DOI={10.1038/s41746-025-02321-7}, number={1}, journal={npj Digital Medicine}, publisher={Springer Science and Business Media LLC}, author={Liang, Yichuan G. and Fan, Leo and Teixeira-Pinto, Armando and Liew, Gerald and White, Andrew J. R.}, year={2026}, month=Jan }
+
+@article{mohammadzadeh2024vf, title={Prediction of Visual Field Progression with Baseline and Longitudinal Structural Measurements Using Deep Learning}, volume={262}, ISSN={0002-9394}, url={http://dx.doi.org/10.1016/j.ajo.2024.02.007}, DOI={10.1016/j.ajo.2024.02.007}, journal={American Journal of Ophthalmology}, publisher={Elsevier BV}, author={Mohammadzadeh, Vahid and Wu, Sean and Besharati, Sajad and Davis, Tyler and Vepa, Arvind and Morales, Esteban and Edalati, Kiumars and Rafiee, Mahshad and Martinyan, Arthur and Zhang, David and Scalzo, Fabien and Caprioli, Joseph and Nouri-Mahdavi, Kouros}, year={2024}, month=June, pages={141--152} }

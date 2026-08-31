@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this reproducibility bundle, please cite the paper below."
+title: "The Camera, the Split, and the Label: A Three-Check Audit of Glaucoma-Progression Prediction"
+abstract: >-
+  An audit of the entire published deep-learning record on the public GRAPE glaucoma-progression benchmark.
+  Under three checks (a device-only baseline, a patient-grouped split, and a test that the input is disjoint
+  from the window that defines the label), none of the reported numbers can be distinguished, at this sample
+  size, from a trivial baseline.
+authors:
+  - name: "Ufonia Science Team"
+year: 2026
+# The paper is under anonymous review at the NeurIPS 2026 workshop TAE ("Can We Trust AI Evaluation?").
+# Formal authorship will be set on acceptance; update the authors list at that point.

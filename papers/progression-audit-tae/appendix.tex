@@ -1,0 +1,203 @@
+% ======================================================================================
+%  Appendix — progression-audit / TAE
+% ======================================================================================
+
+\section{Audit implementation and cohort details}
+\label{app:setup}
+
+\paragraph{Estimator and intervals.} Every AUC we compute is a patient-grouped, repeated five-fold out-of-fold
+estimate from an $\ell_2$-regularized logistic model, with a patient cluster-bootstrap 95\% CI (patients, not eyes,
+are the resampled unit) \citep{diciccio1996bootstrap}. Eyes are scored, but both eyes of a patient always share a
+fold, so no eye of the same patient straddles the split. Tabular modalities are the pre-specified summaries GRAPE ships: the
+visual field, the retinal-nerve-fiber-layer (RNFL) thickness from optical coherence tomography (OCT), and intraocular
+pressure (IOP). The fundus embedding is a frozen RETFound-CFP \citep{zhou2023retfound}
+representation reduced to 16 principal components. The device is controlled with a covariate-adjusted AUC
+\citep{janes2009aroc}, the standard estimator for holding a covariate fixed when comparing discrimination: it conditions
+the score on the acquisition device (binary TOPCON-vs-Canon), so a model cannot use the device as a feature.
+
+\paragraph{The camera-only floor and the device probe.} The camera-only floor is the same logistic estimator trained
+on a single binary device indicator (is-TOPCON) and no image content; it is training-free in the sense that it uses no
+pixels and no learned representation. The device-decoding probe scores the frozen fundus embedding out-of-fold against
+the device label; we report it on the full-fundus crop (AUC \num{0.98}) and on the optic-disc crop the downstream
+papers use (\num{1.00}). We use three fundus crops throughout: the full field of view (``full''), a crop centered on the
+optic disc (``disc'', the crop that decodes at \num{1.00} and the one the fundus probe uses), and a tighter disc
+region-of-interest (``ROI''); Table~\ref{tab:ladder} reports all three. The camera-only floor carries its own patient cluster-bootstrap CI
+(\num{0.56}~\ci{0.48}{0.64} / \num{0.60}~\ci{0.48}{0.71} / \num{0.58}~\ci{0.49}{0.66}), and every device-controlled
+fundus read lies within it (\S\ref{sec:findings}).
+
+\paragraph{The GPPM CFP-only number.} GPPM \citep{zheng2025gppm} reports two fundus-only disc region-of-interest (ROI) reads in its Table~3:
+an independent evidential-deep-learning \emph{Baseline} (a separate architecture GPPM adopts, not its own branch) at
+\num{0.577}/\num{0.571}/\num{0.595}, the value we use in the floor triangulation (F1), which sits at the camera floor on
+all three endpoints. The second is GPPM's own class-balanced CFP branch (\emph{CFP\_M}) at \num{0.668}/\num{0.727}/\num{0.555},
+whose higher PLR2/PLR3 are biased artifacts (zero sensitivity on PLR3 and MD, a biased AUC on 6--16 positives). Its headline \num{0.849} is a visual-field$+$CFP fusion under a combined criterion, not a CFP-only result, so
+the CFP-only read we cite is the reliable one and it sits at the camera floor. This number is reported under GPPM's own
+eye-level, device-uncontrolled, 196-eye protocol. Since an eye-level split and an uncontrolled device only inflate an
+AUC, \num{0.58} is a generous upper bound on GPPM's baseline-fundus signal (a patient-grouped, device-controlled
+evaluation could only lower it), so its coincidence with our camera floor is a conservative comparison,
+not a like-for-like one.
+
+\paragraph{Reproducing GPPM's two-field mechanism.} GPPM pairs a baseline visual-field test with a single follow-up
+test and a fundus photograph (the paper leaves the fundus visit timing under-specified), down-weighting the fundus
+branch to \num{0.01}, so the visual-field pair carries its number. We reproduce that mechanism directly on GRAPE's visual-field series; no fusion architecture is needed, since
+the field decline is the signal. From five features of a two-field pair (the two mean-sensitivity levels, their
+difference, the two-point rate, and the span between them) we predict the fixed PLR2/PLR3/MD label, patient-grouped.
+Pairing the baseline with the last visit (GPPM's in-window structure) scores \num{0.83}/\num{0.86}/\num{0.86}. Pairing it
+with the second visit, the same two tests but both early, sits at chance (\num{0.53}/\num{0.53}/\num{0.51}). The
+intermediate pairs rise monotonically as the second test moves later (mean span \num{0.8}$\rightarrow$\num{2.5} years),
+so the lift tracks how far the second test reaches into the label window, not the count of two. The same early pair
+predicting a transparent MD-slope event on the disjoint later window (visits 3--end) cannot be distinguished from chance
+(\num{0.31}~\ci{0.00}{0.82}, 5 held-out events), consistent with the single-field landmark (a fixed-time forecast). This reproduces GPPM's
+two-field mechanism, not its evidential-fusion architecture. Its own CFP-only branch already sits at the floor
+(above), so the fusion adds in-window functional change, not baseline prognosis (\texttt{grape\_two\_vft.json}). The
+visual-field labels also inherit the large test--retest variability of perimetry, which worsens with field damage. This
+adds noise to the trend fit and caps the AUC achievable by any prognostic model, over and above the small event counts.
+
+\paragraph{Reproduction recipe (F2).} We fine-tuned ResNet-50, EfficientNet-B4, DenseNet-121, and ConvNeXt-Tiny, plus
+a soft-vote ensemble, with the Fouda-style imbalance recipe (optic-disc ROI crop, focal loss $\alpha{=}0.75$,
+$\gamma{=}2.0$, class-balanced sampling, last-30\% fine-tune, 120 balanced mini-batches of 32 [15 epochs $\times$ 8
+batches]). The
+\emph{published} protocol is a single random eye-level 80/20 split over five seeds (no patient grouping, no device
+control, no cross-validation); the \emph{patient-grouped} protocol is a five-fold pooled out-of-fold (OOF) estimate with the camera-only
+reference. Eye-level entries in Table~\ref{tab:collapse} are the median (and max) over seeds. The reversion is not
+an under-training artifact: the \emph{same} recipe reaches the published range on the eye-level split, the camera floor
+is training-free, and a frozen linear probe and a fine-tuned single-CFP model both sit at the same floor (F1), so the drop is
+the split, not the training budget.
+
+\paragraph{Compute.} All audit analyses (frozen embeddings, logistic probes, window-length sweep, landmark, bootstrap) run on CPU in
+minutes; the F2 fine-tuning runs on a single consumer GPU. No result requires re-scoring to reproduce the figures:
+every number is read from a committed data panel.
+
+\section{The device confound in detail}
+\label{app:device}
+
+The camera is confounded with the label (Fig.~\ref{fig:device}a), so a device-only model scores
+\num{0.561}/\num{0.600}/\num{0.580} with no pixels. The naive disc-crop fundus-embedding AUC is no higher than that
+floor, and controlling the device leaves it at the floor: PLR3 drops from \num{0.57} to \num{0.52} and MD from \num{0.59}
+to \num{0.55}, with a weak PLR2 residual (\num{0.59}, its interval including the floor). The full representation ladder
+(Table~\ref{tab:ladder}) shows the same across eight representations and three crops. Because the acquisition-device field ships with
+GRAPE, this confound is controllable, but no published model controls for it. Is the camera indexing genuinely
+more-advanced eyes (in which case a fundus model reading severity would be doing real prognosis), or is it an
+exposure-time artifact? We checked directly (\texttt{grape\_camera\_casemix.json}): baseline severity is matched across
+cameras, TOPCON vs Canon median baseline VF mean sensitivity \num{22.98} vs \num{22.26}, RNFL \num{80} vs \num{81}, IOP
+\num{16.5} vs \num{18.5} (all Mann--Whitney $p>0.05$), so the camera does not photograph sicker eyes. The one metric that
+approaches a difference, IOP ($p{=}0.068$), runs higher in the \emph{less}-progressing camera (Canon), so it argues
+against a case-mix explanation rather than for one. But TOPCON eyes are
+followed markedly longer (median \num{3.12} vs \num{2.03} years, $p<0.001$), and a slope's significance is mechanically
+easier to reach with longer follow-up. The camera-progression association is thus an exposure-time artifact, not baseline
+case-mix and not retinal prognosis, which sharpens rather than weakens the point.
+
+\section{Serial fundus does not forecast}
+\label{app:serial}
+
+The serial-image models that report \num{0.87}--\num{0.96} feed a fundus \emph{sequence}. On GRAPE's follow-up
+photographs, even the in-window serial-fundus signal (whose input overlaps the label window) is at or below chance on all
+three endpoints, naive or device-controlled, and the follow-up embedding identifies the acquisition device at AUC
+\num{0.96} while 41\% of eyes switch camera between visits. A serial-fundus model on GRAPE is therefore reading a changing
+device at least as much as a changing eye, and there is no prospective fundus forecast here. The published numbers come
+from the evaluation protocol, which we reproduce directly below.
+
+\paragraph{Direct reproduction of TSDF.} TSDF's released code (\texttt{github.com/zongzi13545329/MICCAI}) provides a direct
+check of the mechanism. It trains a DSMIL (dual-stream multiple-instance learning) aggregator on the full per-eye visit sequence of precomputed
+MAE (masked-autoencoder) features (in-window by construction: every follow-up visit is fed, so the input spans the label
+window) under an eye-level
+\texttt{KFold(shuffle, random\_state{=}42)} with unweighted
+cross-entropy. It then reports the mean over folds of each fold's best-epoch test AUC, with the best epoch chosen on the
+test fold itself, so epoch selection is not held out. Re-running that exact recipe on its own released features recovers \num{0.866}/\num{0.954}/\num{0.917}
+(vs.\ published \num{0.866}/\num{0.956}/\num{0.917}; one PLR3 fold reaches \num{1.00} on two positives). Fixing the three
+defects independently (a \texttt{GroupKFold} by the 144 patients, epoch selection on a patient-disjoint validation
+split, and a pooled out-of-fold AUC with a patient cluster-bootstrap CI) reverts them to \num{0.43}~\ci{0.33}{0.52} /
+\num{0.54}~\ci{0.37}{0.74} / \num{0.55}~\ci{0.42}{0.67} (this is the split-controlled read; controlling the device and
+circularity together as well leaves it at \num{0.45}/\num{0.56}/\num{0.52}, Table~\ref{tab:auditgrid}). A ladder of fundus-only serial models (a first-two-image
+structural-difference model $\rightarrow$ simple change features $\rightarrow$ pooled RETFound embeddings $\rightarrow$
+a temporal attention head) reproduces the range as the eye-level max over seeds and sits at the patient-grouped floor at
+every rung, so the reversion is a property of the protocol, not the model. This rung is a
+model-class stand-in for DiffSight-Former, not its architecture: on GRAPE DiffSight takes the first two fundus images
+per eye (its $\leq$\num{5}-visit pre-onset prospective forecasting is its separate experiment on the SIGF onset dataset,
+not GRAPE) and encodes inter-visit change through vessel and optic-disc/cup difference maps, none of which is released.
+With only two visits the input is below the three-visit slope threshold, so it is non-circular but not prospective. We reproduce
+the part that can be tested from the available materials: a small learned attention head over the \emph{standardized} frozen RETFound features of those
+two images, letting the head model the inter-visit change rather than injecting a hand-made difference, with \emph{no}
+hand-engineered features. It is trained in DiffSight's own regime (mini-batch, cosine annealing with warm restarts,
+plain cross-entropy). Train-fold feature standardization conditions the head and lifts the whole seed distribution off
+its earlier below-chance floor. Between the two protocols we change a single knob, the split, and hold the model,
+input, and training fixed. Swept over eye-level seeds this head reaches all three reported numbers at the upper tail of
+the seed distribution (PLR2/PLR3/MD max \num{0.82}/\num{0.97}/\num{0.90} vs.\ its \num{0.79}/\num{0.88}/\num{0.80}, on
+\num{5}/\num{2}/\num{3} test positives; the reported values sit in the top decile of the seed distribution),
+reproducing DiffSight's single-split numbers as the tail of a leaky regime. Changing only the split to patient-grouped,
+the same head drops to the floor: \num{0.49}~\ci{0.38}{0.62} / \num{0.48}~\ci{0.23}{0.68} / \num{0.59}~\ci{0.43}{0.73},
+every interval spanning chance and none clearing the camera floor. Because the reproduce and the revert differ in nothing but the split, the reported number is a property of the
+split, not the image content. DiffSight's weights and its vessel/disc segmentation maps are unreleased, so this measures
+its regime and model class rather than its exact architecture.
+
+\paragraph{The baseline prospective forecast (well-powered).} The prescribed positive test predicts the shipped label
+from the first visit, before the label's trend is computable, so it keeps the full event counts (\num{40}/\num{14}/\num{27})
+and is well-powered, unlike a strictly-future landmark. We run it two ways, patient-grouped and device-controlled.
+\emph{Image-only} (fundus alone): the first visit is the single-CFP disc probe (\num{0.60}/\num{0.57}/\num{0.59}), the
+first two images the DiffSight two-visit head (\num{0.49}/\num{0.48}/\num{0.59}); both sit at the floor.
+\emph{Fusion} (visual field, OCT-RNFL, fundus morphometry, and IOP): the first visit scores
+\num{0.58}/\num{0.56}/\num{0.59}, every \num{95}\% interval spanning chance, and extending the input to the first two
+visits stays at the floor.
+This also completes the serial-model audit non-circularly: restricting each serial model to its first $\leq$2 visits is
+the image-only read (TSDF, DiffSight) or the fusion read (GPPM's baseline$+$early visual-field$+$fundus), all at the
+floor. A fundus-specific TSDF cannot be run more prospectively than this on GRAPE: its fundus follow-up is too sparse
+($\approx$1 pre-window image per eye), so TSDF's high number intrinsically requires the in-window sequence. The
+first-visit read is cleanly non-circular; the first-two read adds an early-trajectory point that stays below the
+three-visit significance threshold.
+
+\section{Dial robustness: the onset tracks the label, not the visit count}
+\label{app:dialrobust}
+
+If the dial's jump were an artifact of ``more visits, more signal'', it would sit at the same $k$ for every label. It
+does not: it tracks when the label's defining statistic first becomes computable. Recomputing the dial with the same
+window-feature, patient-grouped out-of-fold pipeline for alternative labels, the onset moves with the definition. On the
+MD-slope label the jump is at $k{=}3$ under the shipped $p<0.05$: the AUC rises from
+$0.47$~\ci{0.38}{0.55} at $k{=}2$ to $0.78$~\ci{0.67}{0.88} at $k{=}3$, disjoint intervals, and the jump stays at $k{=}3$
+under a looser $p<0.10$ ($0.66$~\ci{0.57}{0.74} to $0.86$~\ci{0.80}{0.93}). On a placebo label defined by a two-visit
+change (computable at $k{=}2$) the jump moves to $k{=}2$: $0.38$~\ci{0.28}{0.49} at $k{=}1$ to $1.00$~\ci{0.99}{1.00} at
+$k{=}2$ (the window slope at $k{=}2$ is exactly the placebo's defining statistic, hence near-perfect recovery). The
+intervals are disjoint across each onset, so it is predicted a priori by the label, which is the sense in which the dial
+is a diagnostic rather than an observed curve (\texttt{grape\_dial\_robustness.json}).
+
+\section{Full result tables}
+\label{app:fulltables}
+
+These tables give the exact numbers behind the figures. Table~\ref{tab:collapse} (reproduce-then-revert, single-CFP
+architectures) backs Fig.~\ref{fig:revert}, and Table~\ref{tab:ladder} (the covariate-adjusted representation ladder)
+backs the floor-as-ceiling claim (F1). Table~\ref{tab:auditgrid} gives the per-model audited AUCs with intervals
+behind Fig.~\ref{fig:revert}, and Table~\ref{tab:dial} gives the circularity dial and per-statistic values behind
+Fig.~\ref{fig:circular}.
+
+\input{appendix_tables}
+
+\section{A standardized re-evaluation protocol}
+\label{app:template}
+
+So that the audit is adoptable rather than only diagnostic, we release both a fixed evaluation split and a reporting
+template. \emph{The split.} \texttt{grape\_standard\_splits.csv} assigns each of the 263 eyes to one of five folds by a
+deterministic patient-grouped \texttt{GroupKFold} (\num{144} patients; both eyes of a patient in the same fold, so
+fellow-eye leakage is impossible; one split serves PLR2/PLR3/MD). Scoring on these fixed folds removes the
+single-favorable-split degree of freedom. \emph{The template.} On these folds, a trustworthy progression claim reports:
+(i)~the training-free camera-only floor beside the model, and a device-adjusted AUC (we use a covariate-adjusted AUC);
+(ii)~a patient-grouped, pooled out-of-fold AUC rather than a single split; (iii)~a baseline prospective forecast (the
+first visit predicting the shipped label) alongside any in-window number; (iv)~a patient cluster-bootstrap \num{95}\% CI
+and the event count for every endpoint; and (v)~whether the model input overlaps the label-defining window. Each item is
+a one-line addition, and together they turn a leaderboard number into a defensible clinical claim.
+
+\section{Reproducibility and broader impact}
+\label{app:repro}
+
+\paragraph{Reproducibility.} GRAPE is public under CC BY 4.0 (Figshare collection 6406319), and the RETFound-CFP weights
+we probe are used non-commercially under CC BY-NC 4.0. On acceptance we release the analysis panel and the two
+regeneration scripts under the MIT license. Every number in the paper is read from a
+single committed data panel with a reconciliation gate, and the figures and tables are regenerated from it by two
+scripts with no model calls or re-scoring; the audit estimators (device floor, device-decode probe, circularity sweep,
+baseline prospective forecast, cluster-bootstrap CIs) are standard and specified in \S\ref{sec:audit} and \S\ref{app:setup}.
+The panel is itself rebuilt from the committed per-model analysis outputs (small JSON, versioned alongside the code) by a
+third script whose reconciliation gate cross-checks every locked constant; only regenerating those outputs from scratch
+requires the frozen-feature tensors and the raw images on a GPU.
+
+\paragraph{Broader impact.} The audit is a safeguard: it is designed to stop an over-optimistic progression-prediction
+number from reaching a clinical decision. Its risk is the opposite: an over-strict reading could discourage a genuinely
+useful model, so we frame the checks as necessary conditions for trusting a reported number, not as a ceiling on what
+is clinically achievable, and we state explicitly that progression \emph{is} predictable at scale in cohorts without
+these confounds. No patient-identifiable data are used beyond the public release.

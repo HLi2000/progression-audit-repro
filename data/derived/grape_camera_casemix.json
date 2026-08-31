@@ -1,0 +1,60 @@
+{
+  "n": {
+    "TOPCON": 157,
+    "Canon": 106
+  },
+  "metrics": {
+    "age": {
+      "TOPCON_median": 39.0,
+      "Canon_median": 44.0,
+      "p_mwu": 0.3503
+    },
+    "vf_mean_sens": {
+      "TOPCON_median": 22.98,
+      "Canon_median": 22.26,
+      "p_mwu": 0.6154
+    },
+    "vf_sd": {
+      "TOPCON_median": 4.32,
+      "Canon_median": 4.36,
+      "p_mwu": 0.5059
+    },
+    "rnfl_mean": {
+      "TOPCON_median": 80.0,
+      "Canon_median": 81.0,
+      "p_mwu": 0.6173
+    },
+    "iop": {
+      "TOPCON_median": 16.5,
+      "Canon_median": 18.5,
+      "p_mwu": 0.0684
+    },
+    "cct": {
+      "TOPCON_median": 541.0,
+      "Canon_median": 539.0,
+      "p_mwu": 0.4165
+    },
+    "n_visits": {
+      "TOPCON_median": 4.0,
+      "Canon_median": 4.0,
+      "p_mwu": 0.0012
+    },
+    "fu_years": {
+      "TOPCON_median": 3.12,
+      "Canon_median": 2.03,
+      "p_mwu": 0.0
+    }
+  },
+  "prog": {
+    "TOPCON": {
+      "plr2": 0.178,
+      "plr3": 0.07,
+      "md": 0.127
+    },
+    "Canon": {
+      "plr2": 0.113,
+      "plr3": 0.028,
+      "md": 0.066
+    }
+  }
+}
